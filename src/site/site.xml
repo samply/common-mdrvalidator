@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Sample Samply Project">
+  <body>
+    <menu name="General information">
+      <item href="index.html" name="Overview"/>
+      <item href="changelog.html" name="Changelog"/>
+    </menu>
+    <menu name="documentation">
+      <item href="apidocs/index.html" name="Javadoc"/>
+    </menu>
+    <menu name="Generated content" ref="reports"/>
+  </body>
+
+  <skin>
+    <artifactId>maven-fluido-skin</artifactId>
+    <groupId>org.apache.maven.skins</groupId>
+    <version>1.3.0</version>
+  </skin>
+</project>

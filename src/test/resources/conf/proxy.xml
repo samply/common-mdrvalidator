@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://schema.samply.de/common"
+  xsi:schemaLocation="http://schema.samply.de/common ../../../../common-config/xsd/Common.Config.xsd ">
+  <Keystore>
+    <File></File>
+    <Passphrase></Passphrase>
+  </Keystore>
+  <Proxy>
+    <HTTP>
+      <Password></Password>
+      <Url></Url>
+      <Username></Username>
+    </HTTP>
+    <HTTPS>
+      <Password></Password>
+      <Url></Url>
+      <Username></Username>
+    </HTTPS>
+    <NoProxyHosts>
+      <Host></Host>
+    </NoProxyHosts>
+    <Realm></Realm>
+  </Proxy>
+</Configuration>

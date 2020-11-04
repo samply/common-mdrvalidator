@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>parent</artifactId>
+        <groupId>de.samply</groupId>
+        <version>11.1.0</version>
+    </parent>
+
+    <artifactId>common-mdrvalidator</artifactId>
+    <version>3.0.0</version>
+
+    <name>Samply Common MDRValidator</name>
+    <description>Library to validate fields against the MDR</description>
+    <url>https://github.com/samply/common-mdrvalidator</url>
+    <organization>
+        <name>Samply Community</name>
+    </organization>
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Deniz Tas</name>
+            <email>d.tas@dkfz-heidelberg.de</email>
+            <organization>German Cancer Research Center</organization>
+            <organizationUrl>https://www.dkfz.de/en/</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:https://github.com/samply/common-mdrvalidator.git</connection>
+        <developerConnection>scm:git:https://github.com/samply/common-mdrvalidator.git</developerConnection>
+        <url>https://github.com/samply/common-mdrvalidator</url>
+    </scm>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
+    <properties>
+        <version.samply.common.config>5.1.0</version.samply.common.config>
+        <common-http.version>7.1.0</common-http.version>
+        <auth-dto.version>5.1.0</auth-dto.version>
+        <mdrclient.version>3.0.0</mdrclient.version>
+
+        <skipTests>false</skipTests>
+        <junit.version>4.12</junit.version>
+        <java-hamcrest.version>2.0.0.0</java-hamcrest.version>
+        <slf4j-api.version>1.7.25</slf4j-api.version>
+    </properties>
+
+    <dependencies>
+        <!-- Using old JUnit 4 TODO: rewrite tests to JUnit 5 and remove this dependency-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>java-hamcrest</artifactId>
+            <scope>test</scope>
+            <version>${java-hamcrest.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.samply</groupId>
+            <artifactId>common-config</artifactId>
+            <version>${version.samply.common.config}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.samply</groupId>
+            <artifactId>auth-dto</artifactId>
+            <version>${auth-dto.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.samply</groupId>
+            <artifactId>common-http</artifactId>
+            <version>${common-http.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.samply</groupId>
+            <artifactId>mdrclient</artifactId>
+            <version>${mdrclient.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j-api.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                        <configuration>
+                            <doCheck>false</doCheck>
+                            <doUpdate>false</doUpdate>
+                            <shortRevisionLength>10</shortRevisionLength>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <skip>true</skip>
+                    <doCheck>false</doCheck>
+                    <doUpdate>false</doUpdate>
+                    <shortRevisionLength>10</shortRevisionLength>
+                </configuration>
+            </plugin>
+            
+            <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<verbose>true</verbose>
+					<fork>true</fork>
+				</configuration>
+			</plugin>
+        </plugins>
+    </build>
+
+
+</project>
