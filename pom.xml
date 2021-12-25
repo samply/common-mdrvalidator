@@ -53,7 +53,7 @@
     <properties>
         <version.samply.common.config>5.1.0</version.samply.common.config>
         <common-http.version>7.1.0</common-http.version>
-        <auth-dto.version>5.1.0</auth-dto.version>
+        <auth-dto.version>5.2.0</auth-dto.version>
         <mdrclient.version>3.0.0</mdrclient.version>
 
         <skipTests>false</skipTests>
