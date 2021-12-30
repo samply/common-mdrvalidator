@@ -6,11 +6,11 @@
     <parent>
         <artifactId>parent</artifactId>
         <groupId>de.samply</groupId>
-        <version>11.1.0</version>
+        <version>11.1.1</version>
     </parent>
 
     <artifactId>common-mdrvalidator</artifactId>
-    <version>3.0.0</version>
+    <version>3.1.0-SNAPSHOT</version>
 
     <name>Samply Common MDRValidator</name>
     <description>Library to validate fields against the MDR</description>
@@ -52,14 +52,14 @@
 
     <properties>
         <version.samply.common.config>5.1.0</version.samply.common.config>
-        <common-http.version>7.1.0</common-http.version>
+        <common-http.version>7.4.0-SNAPSHOT</common-http.version>
         <auth-dto.version>5.1.0</auth-dto.version>
-        <mdrclient.version>3.0.0</mdrclient.version>
+        <mdrclient.version>3.1.0-SNAPSHOT</mdrclient.version>
 
         <skipTests>false</skipTests>
         <junit.version>4.12</junit.version>
         <java-hamcrest.version>2.0.0.0</java-hamcrest.version>
-        <slf4j-api.version>1.7.25</slf4j-api.version>
+        <slf4j-api.version>1.7.32</slf4j-api.version>
     </properties>
 
     <dependencies>
