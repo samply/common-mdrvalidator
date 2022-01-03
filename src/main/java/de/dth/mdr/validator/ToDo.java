@@ -1,7 +1,5 @@
 package de.dth.mdr.validator;
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
 import de.dth.mdr.validator.enums.EnumDateFormat;
 import de.dth.mdr.validator.enums.EnumTimeFormat;
 import de.dth.mdr.validator.exception.MdrException;
@@ -19,6 +17,9 @@ import de.samply.common.mdrclient.domain.EnumValidationType;
 import de.samply.common.mdrclient.domain.ErrorMessage;
 import de.samply.common.mdrclient.domain.PermissibleValue;
 import de.samply.common.mdrclient.domain.Validations;
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.core.MediaType;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
@@ -31,6 +32,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.configuration.Configuration;
+import org.glassfish.jersey.client.ClientResponse;
 
 
 public class ToDo {
@@ -57,14 +59,14 @@ public class ToDo {
       httpConnector = new HttpConnector(new HashMap<>());
 
       Client client = httpConnector.getClient(httpConnector
-          .getHttpClientForHTTPS());
+          .getHttpClientForHttps());
       accessToken = getAccessToken(client, configuration);
-      client.destroy();
+      client.close();
     } catch (InvalidKeyException | NoSuchAlgorithmException | SignatureException e) {
       e.printStackTrace();
     }
 
-    Client mdrJerseyClient = httpConnector.getJerseyClient(urlMdr);
+    Client mdrJerseyClient = httpConnector.getJakartaClient(urlMdr);
     MdrClient mdrClient = new MdrClient(urlMdr, mdrJerseyClient);
 
     try {
@@ -114,16 +116,16 @@ public class ToDo {
     String authUrl = configuration
         .getString("auth.rest");
     ClientResponse response = client
-        .resource(authUrl + "/oauth2/signRequest")
-        .accept("application/json").type("application/json")
-        .post(ClientResponse.class, identification);
+        .target(authUrl + "/oauth2/signRequest")
+        .request(MediaType.APPLICATION_JSON)
+        .post(Entity.entity(identification,MediaType.APPLICATION_JSON),ClientResponse.class);
     if (response.getStatus() != 200) {
       System.out.println(
           "Auth.getAccessToken returned " + response.getStatus()
               + " on signRequest bailing out!");
       return null;
     }
-    SignRequestDto signRequest = response.getEntity(SignRequestDto.class);
+    SignRequestDto signRequest = response.readEntity(SignRequestDto.class);
 
     /**
      * Sign the code and encode to base64.
@@ -139,9 +141,9 @@ public class ToDo {
     accessRequest.setCode(signRequest.getCode());
     accessRequest.setSignature(signature);
 
-    response = client.resource(authUrl + "/oauth2/access_token")
-        .accept("application/json").type("application/json")
-        .post(ClientResponse.class, accessRequest);
+    response = client.target(authUrl + "/oauth2/access_token")
+        .request(MediaType.APPLICATION_JSON)
+        .post(Entity.entity(accessRequest,MediaType.APPLICATION_JSON),ClientResponse.class);
 
     if (response.getStatus() != 200) {
       System.out.println(
@@ -150,7 +152,7 @@ public class ToDo {
       return null;
     }
 
-    return response.getEntity(AccessTokenDto.class);
+    return response.readEntity(AccessTokenDto.class);
   }
 
   /**

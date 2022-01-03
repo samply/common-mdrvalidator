@@ -1,8 +1,6 @@
 
 package de.dth.mdr.validator;
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
 import de.samply.auth.client.jwt.KeyLoader;
 import de.samply.auth.rest.AccessTokenDto;
 import de.samply.auth.rest.AccessTokenRequestDto;
@@ -10,6 +8,10 @@ import de.samply.auth.rest.KeyIdentificationDto;
 import de.samply.auth.rest.SignRequestDto;
 import de.samply.common.http.HttpConnector;
 import de.samply.common.mdrclient.MdrClient;
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.core.Form;
+import jakarta.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -21,6 +23,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import org.apache.commons.codec.binary.Base64;
+import org.glassfish.jersey.client.ClientResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -169,7 +172,7 @@ public class MdrConnection {
         httpConnector = new HttpConnector(new HashMap<String, String>());
       }
 
-      Client client = httpConnector.getClient(httpConnector.getHttpClientForHTTPS());
+      Client client = httpConnector.getClient(httpConnector.getHttpClientForHttps());
       mdrClient = new MdrClient(mdrUrl, client);
 
       if (!anonymous) {
@@ -216,16 +219,15 @@ public class MdrConnection {
     }
 
     identification.setKeyId(Integer.parseInt(keyId));
-
-    ClientResponse response = client.resource(authUrl + "/oauth2/signRequest")
-        .accept("application/json")
-        .type("application/json").post(ClientResponse.class, identification);
+    ClientResponse response = client.target(authUrl + "/oauth2/signRequest")
+        .request(MediaType.APPLICATION_JSON)
+        .post(Entity.entity(identification,MediaType.APPLICATION_JSON),ClientResponse.class);
     if (response.getStatus() != 200) {
       logger.debug(
           "Auth.getAccessToken returned " + response.getStatus() + " on signRequest bailing out!");
       return null;
     }
-    SignRequestDto signRequest = response.getEntity(SignRequestDto.class);
+    SignRequestDto signRequest = response.readEntity(SignRequestDto.class);
 
     /*
      * Sign the code and encode to base64
@@ -240,16 +242,15 @@ public class MdrConnection {
     accessRequest.setCode(signRequest.getCode());
     accessRequest.setSignature(signature);
 
-    response = client.resource(authUrl + "/oauth2/access_token").accept("application/json")
-        .type("application/json")
-        .post(ClientResponse.class, accessRequest);
+    response = client.target(authUrl + "/oauth2/access_token").request(MediaType.APPLICATION_JSON)
+        .post(Entity.entity(accessRequest,MediaType.APPLICATION_JSON),ClientResponse.class);
 
     if (response.getStatus() != 200) {
       logger.debug("Auth.getAccessToken returned " + response.getStatus() + " bailing out!");
       return null;
     }
 
-    return response.getEntity(AccessTokenDto.class);
+    return response.readEntity(AccessTokenDto.class);
   }
 
   /**
