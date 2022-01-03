@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>common-mdrvalidator</artifactId>
-    <version>3.1.0-SNAPSHOT</version>
+    <version>3.1.0</version>
 
     <name>Samply Common MDRValidator</name>
     <description>Library to validate fields against the MDR</description>
