@@ -51,15 +51,16 @@
     </distributionManagement>
 
     <properties>
-        <version.samply.common.config>5.1.0</version.samply.common.config>
-        <common-http.version>7.4.0-SNAPSHOT</common-http.version>
-        <auth-dto.version>5.1.0</auth-dto.version>
-        <mdrclient.version>3.1.0-SNAPSHOT</mdrclient.version>
+        <common.config.version>5.1.0</common.config.version>
+        <common-http.version>7.4.0</common-http.version>
+        <auth-dto.version>5.2.0</auth-dto.version>
+        <mdrclient.version>3.1.0</mdrclient.version>
 
-        <skipTests>false</skipTests>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.2</junit.version>
         <java-hamcrest.version>2.0.0.0</java-hamcrest.version>
         <slf4j-api.version>1.7.32</slf4j-api.version>
+
+        <skipTests>false</skipTests>
     </properties>
 
     <dependencies>
@@ -78,7 +79,7 @@
         <dependency>
             <groupId>de.samply</groupId>
             <artifactId>common-config</artifactId>
-            <version>${version.samply.common.config}</version>
+            <version>${common.config.version}</version>
         </dependency>
         <dependency>
             <groupId>de.samply</groupId>
