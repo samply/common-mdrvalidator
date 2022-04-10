@@ -51,7 +51,7 @@
     </distributionManagement>
 
     <properties>
-        <common.config.version>5.1.0</common.config.version>
+        <common.config.version>5.2.0</common.config.version>
         <common-http.version>7.4.0</common-http.version>
         <auth-dto.version>5.2.0</auth-dto.version>
         <mdrclient.version>3.1.0</mdrclient.version>
